@@ -14,6 +14,15 @@ public class DaoConfig {
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
 		DataSource ds = new DataSource();
+		ds.setDriverClassName("org.mariadb.jdbc.Driver");
+		ds.setUrl("jdbc:mariadb://localhost/photocloud?characterEncoding=utf8mb4_general_ci");
+		ds.setUsername("photocloud");
+		ds.setPassword("photobook$%$#F!");
+		ds.setInitialSize(2);
+		ds.setMaxActive(10);
+		ds.setTestWhileIdle(true);
+		ds.setMinEvictableIdleTimeMillis(60000 * 3);
+		ds.setTimeBetweenEvictionRunsMillis(10 * 1000);
 		return ds;
 	}
 	@Bean

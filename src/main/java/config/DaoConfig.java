@@ -8,6 +8,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import dao.ContentDao;
+import dao.DeviceDao;
 
 @Configuration
 @EnableTransactionManagement
@@ -36,5 +37,9 @@ public class DaoConfig {
 	@Bean
 	public ContentDao contentDao() {
 		return new ContentDao(dataSource());
+	}
+	@Bean
+	public DeviceDao deviceDao() {
+		return new DeviceDao(dataSource());
 	}
 }

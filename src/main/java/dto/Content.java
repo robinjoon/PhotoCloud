@@ -23,20 +23,32 @@ public class Content {
 	public String getDevice() {
 		return device;
 	}
+	public void setDevice(String device) {
+		this.device = device;
+	}
 	public String getAlbum() {
 		return album;
 	}
-	public String getOriginalFileName() {
-		return originalFileName;
-	}
-	public String getSystemFileName() {
-		return systemFileName;
+	public void setAlbum(String album) {
+		this.album = album;
 	}
 	public int getContentId() {
 		return contentId;
 	}
 	public void setContentId(int contentId) {
 		this.contentId = contentId;
+	}
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
+	public String getSystemFileName() {
+		return systemFileName;
+	}
+	public void setSystemFileName(String systemFileName) {
+		this.systemFileName = systemFileName;
 	}
 	public MultipartFile getFile() {
 		return file;
@@ -56,7 +68,4 @@ public class Content {
 	public void setLocate(String locate) {
 		this.locate = locate;
 	}
-	
-	
-	
 }

@@ -37,10 +37,19 @@ public class ContentDao {
 		return content;
 	}
 	
-	public List<Content> get(String tableName, int startId, int endId){
+	public List<Content> getPage(String tableName, int page){
 		String sql = "select * from "+tableName+" where contentId >= ? and contentId <= ?";
-		List<Content> contents = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),startId,endId);
+		List<Content> contents = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),(page-1)*12 + 1,page*12);
 		return contents;
+	}
+	public int getContentCount(String tableName) {
+		String sql = "select count(*) as count from "+tableName;
+		return jdbcTemplate.query(sql,new RowMapper<Integer>() {
+			@Override
+			public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return rs.getInt("count");
+			}
+		}).get(0);
 	}
 	
 	private class ContentRowMapper<T extends Content> implements RowMapper<T>{

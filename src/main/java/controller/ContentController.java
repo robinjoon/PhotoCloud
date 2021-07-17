@@ -1,11 +1,9 @@
 package controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import contentmanager.*;
 import dao.ContentDao;
@@ -56,8 +49,27 @@ public class ContentController {
 		src = loader.encoder(file);
 		model.addAttribute("src",src);
 		model.addAttribute("name", content.getOriginalFileName());
-		model.addAttribute("timestamp", content.getTimestamp());
+		if(content.getTimestamp()!=null)
+		model.addAttribute("time", content.getTimestamp().toLocalDateTime());
 		model.addAttribute("locate", content.getLocate());
-		return "view";
+		model.addAttribute("device",content.getDevice());
+		model.addAttribute("album", content.getAlbum());
+		return "imageView";
+	}
+	@GetMapping("/{device}/{album}/list/{page}")
+	private String getMany(@PathVariable("device")String device,@PathVariable("album")String album,@PathVariable("page")int page, Model model) {
+		String tableName = device+"_"+album;
+		List<Content> contents = dao.getPage(tableName, page);
+		for(Content content : contents) {
+			String path = pathManager.getSavePath(content);
+			String src = path+File.separator+content.getSystemFileName();
+			File file = loader.load(src);
+			src = loader.encoder(file);
+			content.setSystemFileName(src);
+		}
+		model.addAttribute("contentCount", dao.getContentCount(tableName));
+		model.addAttribute("nowPage", page);
+		model.addAttribute("contents", contents);
+		return "imageListView";
 	}
 }

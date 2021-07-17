@@ -10,15 +10,18 @@ import org.springframework.jdbc.core.RowMapper;
 import dto.*;
 public class ContentDao {
 	private JdbcTemplate jdbcTemplate;
-	
+	private static final String originName = "devicealbum";
 	public ContentDao(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	public boolean insert(Content content) {
-		String sql = "insert into contents(device,album,originalFileName,systemFileName) values(?,?,?,?)";
+		String tableName = content.getDevice()+"_"+content.getAlbum();
+		copyTable(tableName, originName);
+		String sql = "insert into "+tableName+"(device,album,originalFileName,systemFileName,timestamp,locate) values(?,?,?,?,?,?)";
 		int affectedRowCount = 0;
 		try {
-			affectedRowCount = jdbcTemplate.update(sql, content.getDevice(),content.getAlbum(),content.getOriginalFileName(),content.getSystemFileName());
+			affectedRowCount = jdbcTemplate.update(sql,content.getDevice(),content.getAlbum(),
+					content.getOriginalFileName(),content.getSystemFileName(),content.getTimestamp(),content.getLocate());
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -28,15 +31,15 @@ public class ContentDao {
 		else	
 			return false;
 	}
-	public Content get(String device, String album, int contentId) {
-		String sql = "select * from contents where device = ? and album = ? and contentId = ?";
-		Content content = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),device,album,contentId).get(0);
+	public Content get(String tableName, int contentId) {
+		String sql = "select * from "+tableName+" where contentId = ?";
+		Content content = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),contentId).get(0);
 		return content;
 	}
 	
-	public List<Content> get(String device, String album, int startId, int endId){
-		String sql = "select * from contents where device = ? and album = ? and contentId >= ? and contentId <= ?";
-		List<Content> contents = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),device,album,startId,endId);
+	public List<Content> get(String tableName, int startId, int endId){
+		String sql = "select * from "+tableName+" where contentId >= ? and contentId <= ?";
+		List<Content> contents = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),startId,endId);
 		return contents;
 	}
 	
@@ -49,5 +52,19 @@ public class ContentDao {
 			t.setContentId(rs.getInt("contentId"));
 			return t;
 		}
+	}
+	private boolean copyTable(String copyName, String originName) {
+		String sql = "CREATE TABLE IF NOT EXISTS "+copyName+" LIKE "+originName;
+		int affectedRowCount = 0;
+		try {
+			affectedRowCount = jdbcTemplate.update(sql);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		if(affectedRowCount==1)
+			return true;
+		else	
+			return false;
 	}
 }

@@ -21,6 +21,7 @@
 				config.MvcConfig
 				config.ControllerConfig
 				config.DaoConfig
+				config.ContentManagerConfig
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>

@@ -7,6 +7,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import dao.ContentDao;
+
 @Configuration
 @EnableTransactionManagement
 public class DaoConfig {
@@ -30,5 +32,9 @@ public class DaoConfig {
 		DataSourceTransactionManager tm = new DataSourceTransactionManager();
 		tm.setDataSource(dataSource());
 		return tm;
+	}
+	@Bean
+	public ContentDao contentDao() {
+		return new ContentDao(dataSource());
 	}
 }

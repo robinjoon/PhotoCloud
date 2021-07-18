@@ -4,7 +4,7 @@ import java.io.File;
 import dto.Content;
 
 public class PathManager {
-	private static final String path = "C:\\Users\\robinjoon\\Desktop\\photocloud\\devices";
+	private static final String path = "file save path";
 	public String getSavePath(Content content) {
 		String device = content.getDevice();
 		String album = content.getAlbum();
@@ -16,5 +16,10 @@ public class PathManager {
 			return file.mkdirs();
 		}
 		return false;
+	}
+	public String getThumnailSavePath(Content content) {
+		String device = content.getDevice();
+		String album = content.getAlbum();
+		return path+File.separator+device+File.separator+album+File.separator+"thumbnails";
 	}
 }

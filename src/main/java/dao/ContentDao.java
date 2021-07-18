@@ -39,7 +39,7 @@ public class ContentDao {
 	
 	public List<Content> getPage(String tableName, int page){
 		String sql = "select * from "+tableName+" where contentId >= ? and contentId <= ?";
-		List<Content> contents = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),(page-1)*12 + 1,page*12);
+		List<Content> contents = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),(page-1)*6 + 1,page*6);
 		return contents;
 	}
 	public int getContentCount(String tableName) {

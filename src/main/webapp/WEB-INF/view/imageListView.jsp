@@ -17,6 +17,7 @@
 <title>사진백업시스템</title>
 </head>
 <%List<Content> contents = (List<Content>)request.getAttribute("contents"); %>
+<%List<String> srcs = (List<String>)request.getAttribute("srcs"); %>
 <%String device = contents.get(0).getDevice(); String album = contents.get(0).getAlbum(); int nowPage = (int)request.getAttribute("nowPage");%>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,12 +38,12 @@
 		</div>
 	</nav>
 	<div class ="container-fluid">
-	<%for(int i=0;i<4;i++){ %>
+	<%for(int i=0;i<2;i++){ %>
 		<div class="row">
 		<%for(int j=0;j<3;j++){ %>
 			<div class="col">
-				<a href="<%=i*3+j>=contents.size()?"#":"/PhotoCloud/contents/"+device+"/"+album+"/"+contents.get(i*3+j).getContentId()%>">
-					<img class="<%=i*3+j>=contents.size()?"":"img-thumbnail"%>" src ="<%=i*3+j>=contents.size()?"":contents.get(i*3+j).getSystemFileName()%>">
+				<a href="<%=i*3+j>=contents.size()?"#":"/PhotoCloud/contents/"+device+"/"+album+"/"+contents.get(i*3+j).getContentId()+"/info"%>">
+					<img class="<%=i*3+j>=contents.size()?"":"img-thumbnail"%>" src ="<%=i*3+j>=contents.size()?"":srcs.get(i*3+j)%>">
 				</a>
 			</div>
 		<%} %>
@@ -57,7 +58,7 @@
 				</a>
 			</li>
 			<%int contentsCount = (int)request.getAttribute("contentCount"); %>
-			<%for(int i=1;i<=contentsCount/12+1;i++) {%>
+			<%for(int i=1;i<=contentsCount/6+1;i++) {%>
 			<li class="page-item <%=nowPage==i?"active":""%>">
 				<a class="page-link" href="/PhotoCloud/contents/<%=device %>/<%=album %>/list/<%=i%>"><%=i%></a>
 			</li>

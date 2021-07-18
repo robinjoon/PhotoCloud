@@ -7,6 +7,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import dao.AuthDao;
 import dao.ContentDao;
 import dao.DeviceDao;
 
@@ -20,7 +21,7 @@ public class DaoConfig {
 		ds.setDriverClassName("org.mariadb.jdbc.Driver");
 		ds.setUrl("jdbc:mariadb://localhost/photocloud?characterEncoding=utf8mb4_general_ci");
 		ds.setUsername("photocloud");
-		ds.setPassword("photobook$%$#F!");
+		ds.setPassword("password");
 		ds.setInitialSize(2);
 		ds.setMaxActive(10);
 		ds.setTestWhileIdle(true);
@@ -41,5 +42,9 @@ public class DaoConfig {
 	@Bean
 	public DeviceDao deviceDao() {
 		return new DeviceDao(dataSource());
+	}
+	@Bean
+	public AuthDao authDao() {
+		return new AuthDao(dataSource());
 	}
 }

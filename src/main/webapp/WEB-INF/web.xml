@@ -52,7 +52,7 @@
 		<error-code>404</error-code>
 		<location>/errorpage.jsp</location>
 	</error-page>
-	<!--security-constraint>
+	<security-constraint>
 
 		<web-resource-collection>
 
@@ -68,5 +68,5 @@
 
 		</user-data-constraint>
 
-	</security-constraint-->
+	</security-constraint>
 </web-app>

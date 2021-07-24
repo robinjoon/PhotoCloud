@@ -48,11 +48,7 @@
 	<exception-type>java.lang.Throwable</exception-type>
 		<location>/errorpage.jsp</location>
 	</error-page>
-	<error-page>
-		<error-code>404</error-code>
-		<location>/errorpage.jsp</location>
-	</error-page>
-	<security-constraint>
+	<!--security-constraint>
 
 		<web-resource-collection>
 
@@ -68,5 +64,5 @@
 
 		</user-data-constraint>
 
-	</security-constraint>
+	</security-constraint-->
 </web-app>

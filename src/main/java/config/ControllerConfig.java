@@ -3,6 +3,7 @@ package config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import controller.APIController;
 import controller.ContentController;
 import controller.DeviceController;
 
@@ -20,5 +21,8 @@ public class ControllerConfig {
 	public DeviceController deviceController() {
 		return new DeviceController();
 	}
-
+	@Bean 
+	public APIController apiController() {
+		return new APIController();
+	}
 }

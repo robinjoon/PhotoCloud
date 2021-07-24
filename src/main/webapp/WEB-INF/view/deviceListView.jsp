@@ -39,13 +39,42 @@
 		<div class="row">
 		<%for(int j=0;j<3;j++){ %>
 			<div class="col">
-				<a href="<%=i*3+j>=devices.size()?"#":"/PhotoCloud/devices/"+devices.get(i*3+j)+"/albums/list"%>">
+				<a class="btn btn-light btn-lg" href="<%=i*3+j>=devices.size()?"#":"/PhotoCloud/devices/"+devices.get(i*3+j)+"/albums/list"%>">
 					<%=i*3+j>=devices.size()?"":devices.get(i*3+j)%>
 				</a>
 			</div>
 		<%} %>
 		</div>
 	<%} %>
+	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
 	</div>
 </body>
 </html>

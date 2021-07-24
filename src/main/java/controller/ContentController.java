@@ -45,6 +45,8 @@ public class ContentController {
 		pathManager.newPath(path);
 		pathManager.newPath(thumbnailPath);
 		content = saver.save(content,path);
+		content.setUrl("/contents/"+content.getDevice()+"/"+content.getAlbum()+"/");
+		content.setThumbNailUrl("/contents/"+content.getDevice()+"/"+content.getAlbum()+"/");
 		try {
 			thumbnailBuilder.makeThumbnail(path+File.separator+content.getSystemFileName(), thumbnailPath+File.separator+content.getSystemFileName());
 		} catch (IOException e) {

@@ -21,7 +21,7 @@ public class DaoConfig {
 		ds.setDriverClassName("org.mariadb.jdbc.Driver");
 		ds.setUrl("jdbc:mariadb://localhost/photocloud?characterEncoding=utf8mb4_general_ci");
 		ds.setUsername("photocloud");
-		ds.setPassword("password");
+		ds.setPassword("photocloud!Q@W#E$R");
 		ds.setInitialSize(2);
 		ds.setMaxActive(10);
 		ds.setTestWhileIdle(true);

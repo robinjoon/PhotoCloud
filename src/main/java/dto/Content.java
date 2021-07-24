@@ -4,15 +4,24 @@ import java.sql.Timestamp;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Content {
 	String device;
 	String album;
 	int contentId;
 	String originalFileName;
+	@JsonIgnore
 	String systemFileName;
+	@JsonIgnore
 	MultipartFile file;
+	@JsonFormat(shape=Shape.STRING)
 	Timestamp timestamp;
 	String locate;
+	String thumbNailUrl;
+	String url;
 	public Content(String device, String album, String originalFileName, String systemFileName) {
 		super();
 		this.device = device;
@@ -67,5 +76,18 @@ public class Content {
 	}
 	public void setLocate(String locate) {
 		this.locate = locate;
+	}
+	
+	public String getThumbNailUrl() {
+		return thumbNailUrl;
+	}
+	public void setThumbNailUrl(String thumbNailUrl) {
+		this.thumbNailUrl = thumbNailUrl;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

@@ -17,11 +17,11 @@ public class ContentDao {
 	public boolean insert(Content content) {
 		String tableName = content.getDevice()+"_"+content.getAlbum();
 		copyTable(tableName, originName);
-		String sql = "insert into "+tableName+"(device,album,originalFileName,systemFileName,timestamp,locate) values(?,?,?,?,?,?)";
+		String sql = "insert into "+tableName+"(device,album,originalFileName,systemFileName,timestamp,locate,url) values(?,?,?,?,?,?,?)";
 		int affectedRowCount = 0;
 		try {
 			affectedRowCount = jdbcTemplate.update(sql,content.getDevice(),content.getAlbum(),
-					content.getOriginalFileName(),content.getSystemFileName(),content.getTimestamp(),content.getLocate());
+					content.getOriginalFileName(),content.getSystemFileName(),content.getTimestamp(),content.getLocate(),content.getUrl());
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -33,8 +33,25 @@ public class ContentDao {
 	}
 	public Content get(String tableName, int contentId) {
 		String sql = "select * from "+tableName+" where contentId = ?";
-		Content content = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),contentId).get(0);
+		Content content;
+		try {
+			content = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),contentId).get(0);
+		}catch(Exception e) {
+			content = null;
+		}
 		return content;
+	}
+	
+	public List<Content> get(String tableName, int startID, int endID ){
+		String sql = "select * from "+tableName+" where contentId >= ? and contentId <= ?";
+		List<Content> contents;
+		try {
+			contents = jdbcTemplate.query(sql, new ContentRowMapper<Content>(),startID,endID);
+
+		}catch (Exception e) {
+			contents = null;
+		}
+		return contents;
 	}
 	
 	public List<Content> getPage(String tableName, int page){
@@ -59,6 +76,10 @@ public class ContentDao {
 			T t = (T) new Content(rs.getString("device"),rs.getString("album"),
 					rs.getString("originalFileName"),rs.getString("systemFileName"));
 			t.setContentId(rs.getInt("contentId"));
+			t.setTimestamp(rs.getTimestamp("timestamp"));
+			t.setLocate(rs.getString("locate"));
+			t.setUrl(rs.getString("url")+rs.getInt("contentId"));
+			t.setThumbNailUrl(rs.getString("thumbNailUrl")+rs.getInt("contentId")+"/thumbnail");
 			return t;
 		}
 	}

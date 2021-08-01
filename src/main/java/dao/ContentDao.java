@@ -79,7 +79,7 @@ public class ContentDao {
 			t.setTimestamp(rs.getTimestamp("timestamp"));
 			t.setLocate(rs.getString("locate"));
 			t.setUrl(rs.getString("url")+rs.getInt("contentId"));
-			t.setThumbNailUrl(rs.getString("thumbNailUrl")+rs.getInt("contentId")+"/thumbnail");
+			t.setThumbNailUrl(rs.getString("url")+rs.getInt("contentId")+"/thumbnail");
 			return t;
 		}
 	}

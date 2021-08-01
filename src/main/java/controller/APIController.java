@@ -47,7 +47,7 @@ public class APIController {
 		if(devices==null||devices.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("None of the devices."));
 		}else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(devices);
+			return ResponseEntity.status(HttpStatus.OK).body(devices);
 	}
 	@GetMapping("/{device}/albums/list")
 	private ResponseEntity<Object> getAlbums(@PathVariable("device")String device){
@@ -55,6 +55,6 @@ public class APIController {
 		if(albums==null||albums.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse("Invalid device."));
 		}else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(albums);
+			return ResponseEntity.status(HttpStatus.OK).body(albums);
 	}
 }
